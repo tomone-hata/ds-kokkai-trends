@@ -45,3 +45,4 @@ OK:  | 収集処理 | 取得単位を会議単位から発言単位に変更 |
 | 機密データの境界 | 取得データを機密扱いとし、境界を「生の発言と話者を出さない」に設定。`outputs/`・`private/` を新設 | [ADR-002](decisions/ADR-002-public-private-boundary.md) |
 | 対象データ | PoCの対象を2025年（発言118,566件）、本番想定を2020〜2026年（同763,438件）と確定 | - |
 | 実行環境 | uvでプロジェクトを初期化し、Pythonを3.12に固定。依存は httpx / duckdb / pyarrow / pydantic / tenacity、開発依存は pytest | - |
+| ブランチ運用 | 作業をブランチで分け `--no-ff` でマージする方式を採用。実験も成果物として同一リポジトリに残すと定義 | [ADR-003](decisions/ADR-003-branch-strategy.md) |

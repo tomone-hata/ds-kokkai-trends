@@ -110,7 +110,7 @@ Claude Code を起動し、以下を確認します。
 │   ├── reviews/                 レビューレポート
 │   └── verification/            システム検証レポート
 │
-├── experiments/                 実験コード（使い捨て・ハードコード可）
+├── experiments/                 実験コード（保守しない・ハードコード可。成果物として残す）
 │   └── EXP-NNN-{slug}/          docs/ と outputs/ 側とディレクトリ名を一致させる
 │       ├── run.py
 │       └── config.md            実行条件の記録（必須）
