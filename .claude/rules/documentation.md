@@ -116,7 +116,7 @@ globs: docs/**
 | 場所 | 内容 | Git |
 |---|---|---|
 | `docs/experiments/EXP-NNN-{slug}/` | `plan.md`・`report.md`・`figures/` | 追跡 |
-| `experiments/EXP-NNN-{slug}/` | 実験コード | 追跡（`outputs/` を除く） |
+| `experiments/EXP-NNN-{slug}/` | 実験コード（`run.py`・`config.md`） | 追跡 |
 | `outputs/EXP-NNN-{slug}/` | 全出力 | 対象外 |
 
 - **`plan.md` は実験の実施前に書き、実施後に書き換えない。** 結果を見てから計画を書き直せると撤退基準が意味を失うため（`CLAUDE.md` 2章の原則3と同じ思想）
