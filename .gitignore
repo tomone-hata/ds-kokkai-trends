@@ -1,0 +1,38 @@
+# データ
+data/raw/
+data/interim/
+data/processed/
+
+# 出力結果（再生成可能）
+outputs/*
+!outputs/README.md
+experiments/*/outputs/
+.scratch/
+
+# 調査用の機密データ・非公開の証跡
+private/*
+!private/README.md
+
+# モデル成果物
+models/
+
+# 認証情報
+.env
+.env.*
+secrets/
+
+# Claude Code
+.claude/*
+!.claude/agents/
+!.claude/rules/
+!.claude/commands/
+
+# OS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ipynb_checkpoints/
