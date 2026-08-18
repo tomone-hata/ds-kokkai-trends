@@ -38,9 +38,10 @@ OK:  | 収集処理 | 取得単位を会議単位から発言単位に変更 |
 
 | 対象 | 変更内容 | 関連 |
 |---|---|---|
-| リポジトリ | git初期化（`main`）。`.gitignore` に `outputs/` `private/` `.DS_Store` を追加 | - |
+| リポジトリ | git初期化（`main`）し、GitHub（public / MIT License）へ公開。`.gitignore` に `outputs/` `private/` `.DS_Store` を追加 | - |
 | プロジェクト規約 | `CLAUDE.md` に目的・フェーズ・データソース制約・外部LLM利用の規約を記載 | - |
 | データ層 | PoCはParquet + DuckDBで完結させ、RDB・Dockerの導入は本実装フェーズからと決定 | [ADR-001](decisions/ADR-001-poc-data-layer.md) |
 | ドキュメント構成 | `docs/` をID駆動（EXP / ISSUE / ADR）に再編。`INDEX.md`・`issues/`・`decisions/`・`drafts/`・`_templates/` を新設し、運用規約を `.claude/rules/documentation.md` に定義 | - |
 | 機密データの境界 | 取得データを機密扱いとし、境界を「生の発言と話者を出さない」に設定。`outputs/`・`private/` を新設 | [ADR-002](decisions/ADR-002-public-private-boundary.md) |
 | 対象データ | PoCの対象を2025年（発言118,566件）、本番想定を2020〜2026年（同763,438件）と確定 | - |
+| 実行環境 | uvでプロジェクトを初期化し、Pythonを3.12に固定。依存は httpx / duckdb / pyarrow / pydantic / tenacity、開発依存は pytest | - |
