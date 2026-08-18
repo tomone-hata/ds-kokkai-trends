@@ -13,7 +13,7 @@
 
 | フェーズ | 成果物 | 状態 | レビュー判定 |
 |---|---|---|---|
-| 要件定義 | [requirements/requirements-topic-extraction-poc.md](requirements/requirements-topic-extraction-poc.md) | **完了**（v1.0・実現可能性B・未確定9件はPoC設計書で解消） | **条件付き承認**（レビュー3回。差し戻し2回を経て） |
+| 要件定義 | [requirements/requirements-topic-extraction-poc.md](requirements/requirements-topic-extraction-poc.md) | **完了**（v1.0・実現可能性B・未確定9件はPoC設計書で解消。`main` へのマージはPoCフェーズ完了時） | **条件付き承認**（レビュー3回。差し戻し2回を経て） |
 | PoC設計 | | | |
 | 実験 | | | |
 | アルゴリズム本設計 | | | |

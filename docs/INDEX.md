@@ -10,7 +10,7 @@
 
 | 文書 | パス | 版 | 状態 | 概要 |
 |---|---|---|---|---|
-| 分析要件定義書: 国会会議録トレンド分析（論点抽出PoC） | [requirements/requirements-topic-extraction-poc.md](requirements/requirements-topic-extraction-poc.md) | v1.0 | **現役** | 発言を教師なしクラスタリングで論点抽出し時系列トレンドを可視化するPoCの要件。実現可能性B（条件付き）。未確定9件はPoC設計書で解消 |
+| 分析要件定義書: 国会会議録トレンド分析（論点抽出PoC） | [requirements/requirements-topic-extraction-poc.md](requirements/requirements-topic-extraction-poc.md) | v1.0 | **現役**（`poc/topic-extraction-2025` 上。`main` へのマージをもって確定） | 発言を教師なしクラスタリングで論点抽出し時系列トレンドを可視化するPoCの要件。実現可能性B（条件付き）。未確定9件はPoC設計書で解消 |
 
 ## 設計書・仕様書（確定） — `design/`
 
