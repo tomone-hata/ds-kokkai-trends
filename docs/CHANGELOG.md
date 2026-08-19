@@ -53,6 +53,9 @@ OK:  | 収集処理 | 取得単位を会議単位から発言単位に変更 |
 
 | 対象 | 変更内容 | 関連 |
 |---|---|---|
-| 要件定義 | レビュー2回目・3回目を実施（差し戻し→条件付き承認）。存在しない出典を引用していた誤りを修正し、期間分割学習の検証はPhase 2へ送った（PoCは1年分で検証不能なため）。**v1.0として確定し `requirements/` へ移動** | [2回目](reviews/レビュー_分析要件定義書-論点抽出PoC_v0.7_20260819.md)・[3回目レビュー](reviews/レビュー_分析要件定義書-論点抽出PoC_v0.8_20260819.md) |
+| 要件定義 | レビュー3回（差し戻し2回→条件付き承認）を経て**v1.0として確定**。その後 [ISSUE-001](issues/ISSUE-001-requirements-analysis-unit-and-review-conditions/issue.md) で**分析単位をPoCの比較項目へ変更**しv2.0、[ISSUE-002](issues/ISSUE-002-requirements-ar006-and-unit-reference-scope/issue.md) で**AR-006受入条件の明確化と一致率の観測範囲の限定**を行い**v2.1**。未確定事項10件はPoC設計書で解消 | [3回目レビュー](reviews/レビュー_分析要件定義書-論点抽出PoC_v0.8_20260819.md)、[ISSUE-001](issues/ISSUE-001-requirements-analysis-unit-and-review-conditions/issue.md)、[ISSUE-002](issues/ISSUE-002-requirements-ar006-and-unit-reference-scope/issue.md) |
+| PoC設計 | PoC設計書を **v1.0 として確定**し `design/` へ移動。着手前必須5件（Q-013・015・016・017・018）を確定し、実験内で決定する5件の比較設計を定義。**LLMコストの律速がTPMであり費用制限ではないことを確定**し、ベクトル化方式の決定要因を「品質」と「機密境界」へ移した。収集をマニフェスト方式で設計し期間を実行時の引数化。**レビュー3回（差し戻し2回→条件付き承認）**を経て、ステージの循環参照・Q-018の未統合・改訂の適用漏れを解消 | [PoC設計書](design/poc-design-topic-extraction.md)、[3回目レビュー](reviews/レビュー_PoC設計書-論点抽出_v0.11_20260819.md) |
+| データ層 | **生データを可逆に保存する要件を追加**（`raw_json` 列）。取得と変換のコストが非対称であり、列マップ漏れによる再取得を避けるため | [ADR-001](decisions/ADR-001-poc-data-layer.md) 6.1節 |
+| 上流の入力 | **国会会議録検索APIの仕様要約**と**参照論点リストの情報源**を `docs/inputs/` へ記録。参照A（施政方針演説）・参照B（提出議案）の**実在と見出し構造を確認**（レビューで3回未確認だった項目）。官邸サイトの掲載範囲の制約と、参照A・Bの粒度が1桁異なることが判明 | [API仕様の要約](inputs/kokkai-api-spec-summary.md)、[参照論点リストの情報源](inputs/reference-topic-sources.md) |
 | 機密境界 | 参照論点リストの出典を、国会会議録APIとは独立した公開ソースへ変更。ADR-002の境界を解釈せずに済む形とした。**ただし解消するのは機密境界のみで、参照Aの内容がコーパス内に存在する点は残る**（ADR-006 訂正節） | [ADR-006](decisions/ADR-006-reference-topic-list-storage.md) |
-| ドキュメント運用 | ADRについて、**決定を維持したまま根拠のみを訂正する手続き**を追加（「訂正」節の追記） | `.claude/rules/documentation.md` 7節 |
+| ドキュメント運用 | **マージ後のブランチ削除を規約化**（削除は承認を得てから実行）。**ADRについて決定を維持したまま根拠のみを訂正する手続き**を追加。`docs/inputs/` を公開・非公開の境界表へ明記 | `.claude/rules/documentation.md` 1・3.5・7節 |
