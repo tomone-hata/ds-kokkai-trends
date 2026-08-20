@@ -26,6 +26,9 @@
 | [ISSUE-006](ISSUE-006-empty-partition-schemaless-parquet/issue.md) | 不具合 | 0件の月がスキーマを持たない Parquet として書き出され、後続の読み込みが失敗する | **対応済** | 2026-08-20 | 2026-08-20 | なし（実験コードの修正） |
 | [ISSUE-007](ISSUE-007-s2-aggregation-deviates-from-design/issue.md) | 不具合 | S-2 の集計が設計書と6点で異なり、短文除外閾値 T1・T2 が機械的に決まらない | **対応済** | 2026-08-20 | 2026-08-20 | なし（実験コードの修正） |
 | [ISSUE-008](ISSUE-008-meeting-record-header-exclusion/issue.md) | 改善 | 会議録の冒頭情報が発言として混入している。前処理に除外工程が無い | **対応済** | 2026-08-20 | 2026-08-20 | [PoC設計書](../design/poc-design-topic-extraction.md) v1.3 → **v1.4** |
+| [ISSUE-009](ISSUE-009-se-a-sample-size-resolution/issue.md) | 改善 | SE-A の標本設計（20件・1評価者）が、決定規則が識別しようとする差を識別できない | **仕様として受容** | 2026-08-21 | — | なし（Phase 2 の入力。本フェーズでは設計を変更しない） |
+| [ISSUE-010](ISSUE-010-unit-comparison-predetermined-by-k-and-df/issue.md) | 改善 | k=100 の固定と D-3b の組合せにより、件数の小さい分析単位が比較の前に脱落する | **仕様として受容** | 2026-08-21 | — | なし（同上） |
+| [ISSUE-011](ISSUE-011-se-a-blinding-deviation/issue.md) | 不具合 | SE-A の盲検化が設計書 5.2.1節の手順どおりに実施されなかった | **仕様として受容** | 2026-08-21 | — | なし（回復不能。記録として残す） |
 
 状態: 調査中 / 対応中 / 対応済 / 保留 / 仕様として受容
 
