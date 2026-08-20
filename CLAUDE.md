@@ -118,10 +118,9 @@
 
 ## 6. 実行環境
 
-- 実行: `uv run python {script}`（`python3` / `.venv/bin/python` は使わない）
-- 依存追加: `uv add {package}`（`pip install` は使わない）
-- テスト: `uv run pytest tests/`
-- 実行の起点は常にリポジトリルート。スクリプト内で相対パスの起点を仮定しない
+- 実行: `uv run python {script}`（`python3` / `.venv/bin/python` は使わない）。テスト: `uv run pytest tests/`。**実行の起点は常にリポジトリルート**とし、スクリプト内で相対パスの起点を仮定しない
+- 依存追加: **`uv add` / `pip install` を使わない**（[ADR-009](docs/decisions/ADR-009-dependency-declaration.md)）。`pyproject.toml` を直接編集し `uv lock` → `uv sync --frozen`。**直接依存は `==` で完全固定**し宣言と実体を乖離させない（推移的依存は `uv.lock` が固定）。**辞書・学習済みモデルは版が変われば出力が変わり、乱数シードでは担保できない**
+- 依存の区分: 本番実装で使うと確定したもののみ `[project] dependencies`、PoCの比較候補・可視化は `[dependency-groups] exp`（`uv sync --frozen --group exp`）、テスト等は `dev`。**`exp` → `dependencies` の移動は実験レポートかADRを根拠とし、迷えば `exp` へ置く**
 
 ### データ層（PoC）
 

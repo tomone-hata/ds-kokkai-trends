@@ -2,15 +2,24 @@
 name = "ds-kokkai-trends"
 version = "0.1.0"
 requires-python = ">=3.12"
+# 本番実装で使うことが確定したもののみを置く（ADR-009）。
+# 版は `==` で完全固定する。`uv add` を使わず、本ファイルを直接編集して
+# `uv lock` → `uv sync --frozen` で反映する。
 dependencies = [
-    "duckdb>=1.5.5",
-    "httpx>=0.28.1",
-    "pyarrow>=25.0.1",
-    "pydantic>=2.13.4",
-    "tenacity>=9.1.4",
+    "duckdb==1.5.5",
+    "httpx==0.28.1",
+    "pyarrow==25.0.1",
+    "pydantic==2.13.4",
+    "tenacity==9.1.4",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest>=9.1.1",
+    "pytest==9.1.1",
+]
+# 実験でのみ用いるもの（ADR-009）。PoC の比較候補・可視化・探索的分析。
+# 本番実装での採用が確定した時点で dependencies へ移す。
+# 移動の根拠は実験レポート（report.md）または ADR とする。
+# 導入: uv sync --frozen --group exp
+exp = [
 ]
