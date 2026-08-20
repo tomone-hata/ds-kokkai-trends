@@ -39,6 +39,7 @@
 | [ADR-004](decisions/ADR-004-rule-change-via-branch.md) | 規約変更もブランチ経由とし、載せるブランチは影響範囲で判断する | 2026-08-18 | 採用 |
 | [ADR-005](decisions/ADR-005-merge-via-pull-request.md) | ローカルでのマージを禁止し、Pull Request 経由でマージする | 2026-08-18 | 採用 |
 | [ADR-006](decisions/ADR-006-reference-topic-list-storage.md) | 参照論点リストは独立した公開ソースから作成し `docs/` に置く | 2026-08-19 | 採用 |
+| [ADR-008](decisions/ADR-008-review-checkpoints-in-large-experiments.md) | 多段の実験では、不可逆な決定の直後に `experiment-analyst` の検証を挟む | 2026-08-20 | 採用 |
 | （ADR-007 起票予定） | 個票（発言本文）の外部LLMへの送信可否。**起票されるまで外部API埋め込み・代表発言による命名を実施しない**（PoC設計書 8.7節） | 未起票 | — |
 
 ## 実験 — `experiments/`
