@@ -38,6 +38,7 @@
 | [ADR-003](decisions/ADR-003-branch-strategy.md) | 実験・課題・実装をブランチで分け、実験も成果物として同一リポジトリに残す | 2026-08-18 | 採用 |
 | [ADR-008](decisions/ADR-008-review-checkpoints-in-large-experiments.md) | 多段の実験では、不可逆な決定の直後に `experiment-analyst` の検証を挟む | 2026-08-20 | 採用 |
 | [ADR-009](decisions/ADR-009-dependency-declaration.md) | 依存は `pyproject.toml` に `==` で完全固定し、実験専用の依存を本番依存から分離する | 2026-08-20 | 採用 |
+| [ADR-010](decisions/ADR-010-no-retroactive-revision.md) | 規約変更を過去へ遡って適用しない。実害が出る場合のみ個別に見直す | 2026-08-20 | 採用 |
 
 ## 実験 — `experiments/`
 
