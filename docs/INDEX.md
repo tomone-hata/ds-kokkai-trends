@@ -50,7 +50,7 @@
 
 | ID | 実験名 | フェーズ | 計画 | レポート | 判定 |
 |---|---|---|---|---|---|
-| EXP-001 | 論点抽出ベースライン（`EXP-001-topic-extraction-baseline`） | PoC | [plan.md](experiments/EXP-001-topic-extraction-baseline/plan.md) | 未作成 | **実施中**（S-3 完了 / 全11ステージ中3。次は S-4） |
+| EXP-001 | 論点抽出ベースライン（`EXP-001-topic-extraction-baseline`） | PoC | [plan.md](experiments/EXP-001-topic-extraction-baseline/plan.md) | 未作成 | **実施中**（S-4 完了 / 全11ステージ中4。次は S-5 → **RP-B**） |
 
 ## 課題・不具合 — `issues/`
 
