@@ -7,7 +7,7 @@
 
 | 項目 | 内容 |
 |---|---|
-| 版 | v1.4 |
+| 版 | v1.5 |
 | 状態 | **現役（`poc/topic-extraction-2025` 上。`main` へのマージをもって確定）**。条件付き承認（3回のレビュー） |
 | 対象フェーズ | PoC設計 |
 | 対象実験 | **EXP-001**（`docs/experiments/EXP-001-topic-extraction-baseline/`） |
@@ -36,6 +36,7 @@
 | v1.2 | 2026-08-20 | [ISSUE-005](../issues/ISSUE-005-timeseries-scope-and-committee-confound/issue.md) に基づく改訂。**H-009 を「時系列集計が動作し、会期・委員会構成という既知の構造を再現できる」へ改定。** 年内推移が委員会の開催構成と交絡すること（比率化では解決しないこと、TM-3 の欠測とは別であること）を 11章に明記し、既知構造の再現を測る **TM-4・TM-5** を追加。真のトレンド解釈は Phase 2 へ送る旨を記載 | [ISSUE-005](../issues/ISSUE-005-timeseries-scope-and-committee-confound/issue.md) |
 | v1.3 | 2026-08-20 | [ADR-008](../decisions/ADR-008-review-checkpoints-in-large-experiments.md) に基づく改訂。**`experiment-analyst` によるレビューポイント RP-A〜RP-D を追加**（2.4節・12.1節・12.3節）。CP（撤退判定）は「無駄に走り続けること」しか止めず、**不可逆な決定を含む S-4・S-5・S-7 には判断の妥当性を問う機会が無かった**ため。RP-B（S-5完了時）を S-6 の手前に置き、手戻りを最大4.0人日に限定する。13章に RP の記録要件を追加 | [ADR-008](../decisions/ADR-008-review-checkpoints-in-large-experiments.md) |
 | v1.4 | 2026-08-20 | [ISSUE-008](../issues/ISSUE-008-meeting-record-header-exclusion/issue.md) に基づく改訂。**6.1節に工程2A（会議録冒頭情報の除外）を追加。** `speechOrder = 0` の1,126件は発言ではなく会議録の front matter であり（`speaker` が全件「会議録情報」、1会議あたり1件）、**工程4の短文除外では落ちず、最大値46,976字の正体であった**。6.4節の測定を工程2A の後に行う旨を明記。[RP-A](../reviews/RP-A_EXP-001-S2-data-quality_20260820.md) の差し戻しによる | [ISSUE-008](../issues/ISSUE-008-meeting-record-header-exclusion/issue.md) |
+| v1.5 | 2026-08-20 | [ADR-009](../decisions/ADR-009-dependency-declaration.md) に基づく改訂。17章の依存追加手順を `uv add` から**`pyproject.toml` の直接編集 + `uv lock` → `uv sync --frozen`** へ改めた（**旧記述は当時の `CLAUDE.md` 6章に従ったものであり誤りではない。追随させたのは、`uv add` では `sudachidict-core` の版が動き S-3 の決定が再現できなくなるためである**）。**比較候補のライブラリは既定で `exp` グループに置き、採用確定時に `dependencies` へ移す**旨と、**`sudachidict-core` の版が分かち書き結果を変えるため実験条件として記録する**旨を追記 | [ADR-009](../decisions/ADR-009-dependency-declaration.md) |
 
 版数の付け方: 方式・スキーマ・インタフェースの変更はメジャー、記述の補足・誤記の修正はマイナー。
 **確定前（v1.0未満）のドラフト改訂に `ISSUE-NNN` / `ADR-NNN` の起票は要しない**（`.claude/rules/documentation.md` 4節）。起票列には根拠となる文書を記載する。
@@ -1501,7 +1502,11 @@ S-1 の実行時間（待機主体）と、S-8 の再判定までの中3日以�
 
 **HDBSCAN は scikit-learn 同梱の実装を用いる。** 別パッケージ（`hdbscan`）を追加する場合は、その理由を `config.md` に記録する。
 
-**依存の追加は `uv add {package}` で行う**（`pip install` を使わない、`CLAUDE.md` 6章）。
+**依存の追加は `uv add` を使わない**（[ADR-009](../decisions/ADR-009-dependency-declaration.md)）。`pyproject.toml` を直接編集して `==` で完全固定し、`uv lock` → `uv sync --frozen --group exp` で反映する。
+
+**上表のパッケージは既定で `[dependency-groups] exp` に置く。** PoC の比較で採用が確定したものだけを `[project] dependencies` へ移し、移動の根拠を `report.md` または ADR に残す。**採用しなかった候補のライブラリを本番依存に残さないため。**
+
+**`sudachidict-core` は日付版であり、版が変われば分かち書き結果が変わる。** 語彙・TF-IDF・クラスタリングまで変わるが**乱数シードでは担保できない**ため、`config.md` に実験条件として版を記録する（13.1節 #7）。
 
 ---
 

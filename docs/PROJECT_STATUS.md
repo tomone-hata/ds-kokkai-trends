@@ -6,7 +6,7 @@
 
 | 項目 | 内容 |
 |---|---|
-| 現在のフェーズ | **EXP-001 実施中。S-2 完了・RP-A 通過（3回目）。次は S-3（分かち書きの決定）** |
+| 現在のフェーズ | **EXP-001 実施中。S-3（分かち書きの決定）に着手。依存の導入まで完了** |
 | 最終更新 | 2026-08-20 |
 
 ## フェーズ進捗
@@ -14,7 +14,7 @@
 | フェーズ | 成果物 | 状態 | レビュー判定 |
 |---|---|---|---|
 | 要件定義 | [requirements/requirements-topic-extraction-poc.md](requirements/requirements-topic-extraction-poc.md) | **完了**（v2.1・実現可能性B・未確定10件はPoC設計書で解消。`main` へのマージはPoCフェーズ完了時） | **条件付き承認**（レビュー3回。差し戻し2回を経て） |
-| PoC設計 | [design/poc-design-topic-extraction.md](design/poc-design-topic-extraction.md) | **完了**（v1.4・想定工数17.0〜18.0人日） | **条件付き承認**（レビュー3回。差し戻し2回を経て） |
+| PoC設計 | [design/poc-design-topic-extraction.md](design/poc-design-topic-extraction.md) | **完了**（v1.5・想定工数17.0〜18.0人日） | **条件付き承認**（レビュー3回。差し戻し2回を経て） |
 | 実験 | [EXP-001 plan.md](experiments/EXP-001-topic-extraction-baseline/plan.md) | **実施中**（S-2 完了 / 全11ステージ中2） | **RP-A 通過**（差し戻し2回を経て） |
 | アルゴリズム本設計 | | | |
 | システム設計 | | | |

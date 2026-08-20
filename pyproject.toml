@@ -22,4 +22,13 @@ dev = [
 # 移動の根拠は実験レポート（report.md）または ADR とする。
 # 導入: uv sync --frozen --group exp
 exp = [
+    # S-3 分かち書きの決定（W-1・W-2 の形態素解析）
+    # sudachidict-core は日付版であり、版が変われば分かち書き結果が変わる。
+    # 乱数シードでは担保できないため config.md に実験条件として記録する。
+    "sudachipy==0.6.11",
+    "sudachidict-core==20260723",
+    # S-3 以降のベクトル化・クラスタリング（TF-IDF・k-means・シルエット係数）
+    "scikit-learn==1.9.0",
+    "numpy==2.5.2",
+    "scipy==1.18.0",
 ]
