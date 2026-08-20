@@ -61,15 +61,16 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "duckdb", specifier = ">=1.5.5" },
-    { name = "httpx", specifier = ">=0.28.1" },
-    { name = "pyarrow", specifier = ">=25.0.1" },
-    { name = "pydantic", specifier = ">=2.13.4" },
-    { name = "tenacity", specifier = ">=9.1.4" },
+    { name = "duckdb", specifier = "==1.5.5" },
+    { name = "httpx", specifier = "==0.28.1" },
+    { name = "pyarrow", specifier = "==25.0.1" },
+    { name = "pydantic", specifier = "==2.13.4" },
+    { name = "tenacity", specifier = "==9.1.4" },
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "pytest", specifier = ">=9.1.1" }]
+dev = [{ name = "pytest", specifier = "==9.1.1" }]
+exp = []
 
 [[package]]
 name = "duckdb"
