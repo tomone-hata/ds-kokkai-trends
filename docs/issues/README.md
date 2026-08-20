@@ -24,6 +24,8 @@
 | [ISSUE-004](ISSUE-004-collector-transport-error-retry/issue.md) | 不具合 | 収集スクリプトがトランスポート層のエラー（接続断）で停止する | **対応済** | 2026-08-20 | 2026-08-20 | なし（実験コードの修正） |
 | [ISSUE-005](ISSUE-005-timeseries-scope-and-committee-confound/issue.md) | 改善 | 年内の時系列推移が委員会の開催構成と交絡する。H-009 を動作確認へ限定 | **対応済** | 2026-08-20 | 2026-08-20 | [PoC設計書](../design/poc-design-topic-extraction.md) v1.1 → **v1.2** |
 | [ISSUE-006](ISSUE-006-empty-partition-schemaless-parquet/issue.md) | 不具合 | 0件の月がスキーマを持たない Parquet として書き出され、後続の読み込みが失敗する | **対応済** | 2026-08-20 | 2026-08-20 | なし（実験コードの修正） |
+| [ISSUE-007](ISSUE-007-s2-aggregation-deviates-from-design/issue.md) | 不具合 | S-2 の集計が設計書と6点で異なり、短文除外閾値 T1・T2 が機械的に決まらない | **対応済** | 2026-08-20 | 2026-08-20 | なし（実験コードの修正） |
+| [ISSUE-008](ISSUE-008-meeting-record-header-exclusion/issue.md) | 改善 | 会議録の冒頭情報が発言として混入している。前処理に除外工程が無い | **対応済** | 2026-08-20 | 2026-08-20 | [PoC設計書](../design/poc-design-topic-extraction.md) v1.3 → **v1.4** |
 
 状態: 調査中 / 対応中 / 対応済 / 保留 / 仕様として受容
 

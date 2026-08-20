@@ -18,7 +18,7 @@
 
 | 文書 | パス | 版 | 状態 | 概要 |
 |---|---|---|---|---|
-| PoC設計書: 国会会議録トレンド分析（論点抽出 EXP-001） | [design/poc-design-topic-extraction.md](design/poc-design-topic-extraction.md) | **v1.2** | **現役**（`poc/topic-extraction-2025` 上。`main` へのマージをもって確定） | EXP-001 の実験計画。11ステージ・撤退基準・比較設計・評価設計。想定工数17.0〜18.0人日。未処理の指摘7件は20.2節 |
+| PoC設計書: 国会会議録トレンド分析（論点抽出 EXP-001） | [design/poc-design-topic-extraction.md](design/poc-design-topic-extraction.md) | **v1.4** | **現役**（`poc/topic-extraction-2025` 上。`main` へのマージをもって確定） | EXP-001 の実験計画。11ステージ・撤退基準・比較設計・評価設計。想定工数17.0〜18.0人日。未処理の指摘7件は20.2節 |
 
 ## 検討中の文書 — `drafts/`
 
@@ -48,7 +48,7 @@
 
 | ID | 実験名 | フェーズ | 計画 | レポート | 判定 |
 |---|---|---|---|---|---|
-| EXP-001 | 論点抽出ベースライン（`EXP-001-topic-extraction-baseline`） | PoC | [plan.md](experiments/EXP-001-topic-extraction-baseline/plan.md) | 未作成 | **実施中**（S-1 完了 / CP-1 通過） |
+| EXP-001 | 論点抽出ベースライン（`EXP-001-topic-extraction-baseline`） | PoC | [plan.md](experiments/EXP-001-topic-extraction-baseline/plan.md) | 未作成 | **実施中**（S-2 完了 / CP-1・**RP-A 通過**。次は S-3） |
 
 ## 課題・不具合 — `issues/`
 
@@ -56,7 +56,7 @@
 
 | ID | 種別 | 内容 | 状態 |
 |---|---|---|---|
-| （なし。ISSUE-001〜006 はすべて対応済。全件は [issues/README.md](issues/README.md) を参照） | | | |
+| （なし。ISSUE-001〜008 はすべて対応済。全件は [issues/README.md](issues/README.md) を参照） | | | |
 
 ## レビュー・検証レポート
 
@@ -65,6 +65,7 @@
 | 分析要件定義書レビュー（v0.6対象） | [reviews/レビュー_分析要件定義書-論点抽出PoC_20260818.md](reviews/レビュー_分析要件定義書-論点抽出PoC_20260818.md) | 2026-08-18 | **差し戻し**（致命的4・重要15・軽微8） |
 | 分析要件定義書 再レビュー（v0.7対象） | [reviews/レビュー_分析要件定義書-論点抽出PoC_v0.7_20260819.md](reviews/レビュー_分析要件定義書-論点抽出PoC_v0.7_20260819.md) | 2026-08-19 | **差し戻し**（新規: 高3・中10・低7） |
 | 分析要件定義書 3回目レビュー（v0.8対象） | [reviews/レビュー_分析要件定義書-論点抽出PoC_v0.8_20260819.md](reviews/レビュー_分析要件定義書-論点抽出PoC_v0.8_20260819.md) | 2026-08-19 | **条件付き承認**（高0・中/低4）。移動条件A-1〜A-6は対応済、B-1〜B-6はPoC設計書までに処理（処理状況はPoC設計書20章） |
+| [RP-A: EXP-001 S-2 データ品質確認](reviews/RP-A_EXP-001-S2-data-quality_20260820.md) | [reviews/RP-A_EXP-001-S2-data-quality_20260820.md](reviews/RP-A_EXP-001-S2-data-quality_20260820.md) | 2026-08-20 | **通過**（3回目。差し戻し2回を経て）。[ADR-008](decisions/ADR-008-review-checkpoints-in-large-experiments.md) の RP-A |
 | PoC設計書 3回目レビュー（v0.11対象） | [reviews/レビュー_PoC設計書-論点抽出_v0.11_20260819.md](reviews/レビュー_PoC設計書-論点抽出_v0.11_20260819.md) | 2026-08-19 | **条件付き承認**（高0・中6）。移動条件C-1〜C-4は対応済 |
 | PoC設計書 再レビュー（v0.9対象） | [reviews/レビュー_PoC設計書-論点抽出_v0.9_20260819.md](reviews/レビュー_PoC設計書-論点抽出_v0.9_20260819.md) | 2026-08-19 | **差し戻し**（高2＝反映の取りこぼし・検算42項目全一致）。v0.10 で解消 |
 | PoC設計書レビュー（v0.6対象） | [reviews/レビュー_PoC設計書-論点抽出_v0.6_20260819.md](reviews/レビュー_PoC設計書-論点抽出_v0.6_20260819.md) | 2026-08-19 | **差し戻し**（高2・検算35項目中30一致）。**v0.8 で I-001・I-002 を解消済み・再レビュー待ち** |
