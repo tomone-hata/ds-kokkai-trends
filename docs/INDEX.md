@@ -36,6 +36,7 @@
 | [ADR-001](decisions/ADR-001-poc-data-layer.md) | PoCではRDB・Dockerを導入せず Parquet + DuckDB で完結させる | 2026-08-18 | 採用 |
 | [ADR-002](decisions/ADR-002-public-private-boundary.md) | `docs/` は全て公開可能とし、取得データは機密扱いで `private/` へ分離する | 2026-08-18 | 採用 |
 | [ADR-003](decisions/ADR-003-branch-strategy.md) | 実験・課題・実装をブランチで分け、実験も成果物として同一リポジトリに残す | 2026-08-18 | 採用 |
+| [ADR-008](decisions/ADR-008-review-checkpoints-in-large-experiments.md) | 多段の実験では、不可逆な決定の直後に `experiment-analyst` の検証を挟む | 2026-08-20 | 採用 |
 
 ## 実験 — `experiments/`
 
