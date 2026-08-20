@@ -75,6 +75,18 @@ def assert_output_is_gitignored():
     log.info("アサーション: 出力先は .gitignore 対象である")
 
 
+def assert_partition_schemas_identical():
+    """全パーティションで列構成が一致することを確認する（設計書 13.2節 #2a・ISSUE-006）。"""
+    import pyarrow.parquet as pq
+
+    sigs = {}
+    for f in sorted(REPO_ROOT.glob("data/raw/year=*/month=*/speech.parquet")):
+        sigs.setdefault(tuple(pq.read_schema(f).names), []).append(f.parent.name)
+    assert len(sigs) == 1, f"列構成が一致しないパーティションがある: {sigs}"
+    log.info("アサーション: 全 %d パーティションで列構成が一致（%d列）",
+             len(next(iter(sigs.values()))), len(next(iter(sigs))))
+
+
 def normalize(text):
     t = unicodedata.normalize("NFKC", text)
     t = re.sub(r"\s+", " ", t).strip()
@@ -89,6 +101,8 @@ def load_speeches():
     con.execute(f"CREATE VIEW raw AS SELECT * FROM read_parquet('{RAW_GLOB}', hive_partitioning=1)")
     rows = con.execute(
         "SELECT speechID, speech FROM raw WHERE speechOrder <> 0 ORDER BY speechID").fetchall()
+    total, uniq = con.execute("SELECT COUNT(*), COUNT(DISTINCT speechID) FROM raw").fetchone()
+    assert total == uniq, f"speechID に重複がある: {total - uniq} 件"
     assert len(rows) == EXPECTED_SPEECHES, f"件数が S-2 の実測と異なる: {len(rows)}"
     texts = [normalize(r[1]) for r in rows]
     assert all(texts), "正規化後に空文字となった発言がある"
@@ -121,6 +135,19 @@ def gini(x):
     return 0.0 if x.sum() == 0 else float((2 * np.arange(1, n + 1) - n - 1).dot(x) / (n * x.sum()))
 
 
+def assert_matrix_sane(X, label):
+    """設計書 13.2節 #4・#5。特徴量行列の健全性と L2 正規化を確認する。"""
+    import numpy as _np
+    data = X.data if hasattr(X, "data") else _np.asarray(X).ravel()
+    assert _np.isfinite(data).all(), f"[{label}] 特徴量行列に欠損または無限大がある"
+    norms = _np.sqrt(X.multiply(X).sum(axis=1)).A.ravel() if hasattr(X, "multiply") \
+        else _np.linalg.norm(X, axis=1)
+    nz = norms[norms > 0]
+    assert _np.allclose(nz, 1.0, atol=1e-6), \
+        f"[{label}] L2正規化されていない行がある（最小 {nz.min():.6f} / 最大 {nz.max():.6f}）"
+    log.info("  アサーション[%s]: 欠損・無限大なし / L2ノルム=1（有効 %d 行）", label, len(nz))
+
+
 def cluster_level(level, tokens, keep_idx):
     """1水準について TF-IDF → L2正規化 → k-means を実行する。"""
     t0 = time.monotonic()
@@ -129,6 +156,7 @@ def cluster_level(level, tokens, keep_idx):
                           lowercase=False, sublinear_tf=SUBLINEAR_TF)
     X = vec.fit_transform(sub)
     X = l2_normalize(X)
+    assert_matrix_sane(X, level)
     km = KMeans(n_clusters=K_CLUSTERS, random_state=SEED,
                 n_init=KMEANS_N_INIT, max_iter=KMEANS_MAX_ITER)
     labels = km.fit_predict(X)
@@ -163,6 +191,7 @@ def main():
     random.seed(SEED)
     np.random.seed(SEED)
     assert_output_is_gitignored()
+    assert_partition_schemas_identical()
 
     texts = load_speeches()
     lengths = np.array([len(t) for t in texts])

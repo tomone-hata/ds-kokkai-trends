@@ -80,6 +80,18 @@ def assert_output_is_gitignored():
     log.info("アサーション: 出力先は .gitignore 対象である")
 
 
+def assert_partition_schemas_identical():
+    """全パーティションで列構成が一致することを確認する（設計書 13.2節 #2a・ISSUE-006）。"""
+    import pyarrow.parquet as pq
+
+    sigs = {}
+    for f in sorted(REPO_ROOT.glob("data/raw/year=*/month=*/speech.parquet")):
+        sigs.setdefault(tuple(pq.read_schema(f).names), []).append(f.parent.name)
+    assert len(sigs) == 1, f"列構成が一致しないパーティションがある: {sigs}"
+    log.info("アサーション: 全 %d パーティションで列構成が一致（%d列）",
+             len(next(iter(sigs.values()))), len(next(iter(sigs))))
+
+
 def normalize(text):
     """6.2節の正規化。順序 3-1 → 3-2 → 3-3 は仕様である。"""
     t = unicodedata.normalize("NFKC", text)
@@ -138,6 +150,19 @@ def tokenize_ngram(texts, n):
     return out
 
 
+def assert_matrix_sane(X, label):
+    """設計書 13.2節 #4・#5。特徴量行列の健全性と L2 正規化を確認する。"""
+    import numpy as _np
+    data = X.data if hasattr(X, "data") else _np.asarray(X).ravel()
+    assert _np.isfinite(data).all(), f"[{label}] 特徴量行列に欠損または無限大がある"
+    norms = _np.sqrt(X.multiply(X).sum(axis=1)).A.ravel() if hasattr(X, "multiply") \
+        else _np.linalg.norm(X, axis=1)
+    nz = norms[norms > 0]
+    assert _np.allclose(nz, 1.0, atol=1e-6), \
+        f"[{label}] L2正規化されていない行がある（最小 {nz.min():.6f} / 最大 {nz.max():.6f}）"
+    log.info("  アサーション[%s]: 欠損・無限大なし / L2ノルム=1（有効 %d 行）", label, len(nz))
+
+
 def run_method(mid, label, tokens, cache):
     """1方式について TF-IDF → L2正規化 → k-means を実行し、指標を返す。"""
     m = {"method_id": mid, "label": label}
@@ -161,6 +186,7 @@ def run_method(mid, label, tokens, cache):
              m["WM-2_mean_tokens"], m["vectorize_seconds"])
 
     X = l2_normalize(X)                # 工程7（5.1節の距離統一）
+    assert_matrix_sane(X, mid)
     t1 = time.monotonic()
     km = KMeans(n_clusters=K_CLUSTERS, random_state=SEED,
                 n_init=KMEANS_N_INIT, max_iter=KMEANS_MAX_ITER)
@@ -232,6 +258,7 @@ def main():
     random.seed(SEED)
     np.random.seed(SEED)
     assert_output_is_gitignored()
+    assert_partition_schemas_identical()
 
     ids, texts = load_speeches(args.limit)
     methods = [("W-1", "SudachiPy モードC（最長単位）"), ("W-2", "SudachiPy モードA（最短単位）"),
