@@ -6,7 +6,7 @@
 
 | 項目 | 内容 |
 |---|---|
-| 現在のフェーズ | **EXP-001 実施中。S-3（分かち書きの決定）に着手。依存の導入まで完了** |
+| 現在のフェーズ | **EXP-001 実施中。S-3 完了（W-2 採用）。次は S-4（前処理水準の決定）** |
 | 最終更新 | 2026-08-20 |
 
 ## フェーズ進捗
@@ -15,7 +15,7 @@
 |---|---|---|---|
 | 要件定義 | [requirements/requirements-topic-extraction-poc.md](requirements/requirements-topic-extraction-poc.md) | **完了**（v2.1・実現可能性B・未確定10件はPoC設計書で解消。`main` へのマージはPoCフェーズ完了時） | **条件付き承認**（レビュー3回。差し戻し2回を経て） |
 | PoC設計 | [design/poc-design-topic-extraction.md](design/poc-design-topic-extraction.md) | **完了**（v1.5・想定工数17.0〜18.0人日） | **条件付き承認**（レビュー3回。差し戻し2回を経て） |
-| 実験 | [EXP-001 plan.md](experiments/EXP-001-topic-extraction-baseline/plan.md) | **実施中**（S-2 完了 / 全11ステージ中2） | **RP-A 通過**（差し戻し2回を経て） |
+| 実験 | [EXP-001 plan.md](experiments/EXP-001-topic-extraction-baseline/plan.md) | **実施中**（S-3 完了 / 全11ステージ中3） | RP-A 通過。**次のゲートは RP-B（S-5 完了時）** |
 | アルゴリズム本設計 | | | |
 | システム設計 | | | |
 | 実装 | | | |
@@ -43,3 +43,4 @@
 | 2026-08-20 | **多段の実験では、不可逆な決定の直後に `experiment-analyst` の検証を挟むと決定**（RP-A〜RP-D）。撤退基準は「無駄に走り続けること」しか止めず、貪欲決定では誤った前提が下流へ静かに伝播するため。**実験の単位を小さく切る案は、収集だけ・前処理だけでは成立性を判定できないため退けた**（初回に限る） | [ADR-008](decisions/ADR-008-review-checkpoints-in-large-experiments.md) |
 | 2026-08-20 | **RP-A が S-2 を差し戻し、ADR-008 が最初の適用で機能した。** 初回 S-2 は設計書 6.1節を確認せず生の `speech` 列を測っており、「短文は大量に存在しない」という結論が反転した（≤10字が 12件 → 3,458件）。**アサーション5件はすべて通過しており、実行の成否では検出できない誤りであった** | [RP-Aレポート](reviews/RP-A_EXP-001-S2-data-quality_20260820.md)、[ISSUE-007](issues/ISSUE-007-s2-aggregation-deviates-from-design/issue.md) |
 | 2026-08-20 | **RP-A を通過（3回目）。S-2 を完了し T1 = 10 / T2 = 20 が機械的に確定。** 差し戻し2回はいずれも実質的な誤りを検出した。2回目は「設計に違反したからこそ正しい値が出ていた」状態の指摘であり、**値の妥当性だけを見ていては検出できなかった**。ADR-008 7節の見直し条件2（差し戻し0回なら不要）には該当しない | [RP-Aレポート](reviews/RP-A_EXP-001-S2-data-quality_20260820.md) |
+| 2026-08-20 | **S-3 で W-2（SudachiPy モードA）を採用し、S-4 以降で固定。** 決定規則1（SE-A 解釈可能率 35%）で単独首位。**撤退基準 D-2 は全項目通過**し縮退不要。**H-010（議事進行クラスタの分離）は初回観測として成立**。あわせて**LLMを主観評価の評価者にすると別の方式を採用していた**ことが実測で判明（人とLLMの一致率40%、LLM同士は91%） | [config.md](../experiments/EXP-001-topic-extraction-baseline/config.md) |
