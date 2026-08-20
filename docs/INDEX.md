@@ -18,7 +18,7 @@
 
 | 文書 | パス | 版 | 状態 | 概要 |
 |---|---|---|---|---|
-| PoC設計書: 国会会議録トレンド分析（論点抽出 EXP-001） | [design/poc-design-topic-extraction.md](design/poc-design-topic-extraction.md) | **v1.1** | **現役**（`poc/topic-extraction-2025` 上。`main` へのマージをもって確定） | EXP-001 の実験計画。11ステージ・撤退基準・比較設計・評価設計。想定工数17.0〜18.0人日。未処理の指摘7件は20.2節 |
+| PoC設計書: 国会会議録トレンド分析（論点抽出 EXP-001） | [design/poc-design-topic-extraction.md](design/poc-design-topic-extraction.md) | **v1.2** | **現役**（`poc/topic-extraction-2025` 上。`main` へのマージをもって確定） | EXP-001 の実験計画。11ステージ・撤退基準・比較設計・評価設計。想定工数17.0〜18.0人日。未処理の指摘7件は20.2節 |
 
 ## 検討中の文書 — `drafts/`
 
@@ -47,7 +47,7 @@
 
 | ID | 実験名 | フェーズ | 計画 | レポート | 判定 |
 |---|---|---|---|---|---|
-| EXP-001 | 論点抽出ベースライン（`EXP-001-topic-extraction-baseline`） | PoC | 未作成（PoC設計書の確定後に作成） | 未作成 | 未実施 |
+| EXP-001 | 論点抽出ベースライン（`EXP-001-topic-extraction-baseline`） | PoC | [plan.md](experiments/EXP-001-topic-extraction-baseline/plan.md) | 未作成 | **実施中**（S-1 完了 / CP-1 通過） |
 
 ## 課題・不具合 — `issues/`
 
@@ -55,7 +55,7 @@
 
 | ID | 種別 | 内容 | 状態 |
 |---|---|---|---|
-| （なし。ISSUE-001 は対応済。全件は [issues/README.md](issues/README.md) を参照） | | | |
+| （なし。ISSUE-001〜006 はすべて対応済。全件は [issues/README.md](issues/README.md) を参照） | | | |
 
 ## レビュー・検証レポート
 

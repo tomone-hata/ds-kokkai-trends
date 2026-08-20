@@ -21,6 +21,9 @@
 | [ISSUE-001](ISSUE-001-requirements-analysis-unit-and-review-conditions/issue.md) | 改善 | 分析要件定義書 v1.0 の改訂（分析単位の根拠の飛躍、およびレビュー条件B-2〜B-6） | **対応済** | 2026-08-19 | 2026-08-19 | [要件定義書](../requirements/requirements-topic-extraction-poc.md) v1.0 → **v2.0** |
 | [ISSUE-002](ISSUE-002-requirements-ar006-and-unit-reference-scope/issue.md) | 改善 | AR-006 受入条件の充足方法、および分析単位と参照リストの観測範囲 | **対応済** | 2026-08-19 | 2026-08-19 | [要件定義書](../requirements/requirements-topic-extraction-poc.md) v2.0 → **v2.1** |
 | [ISSUE-003](ISSUE-003-poc-design-stage-and-decision-rules/issue.md) | 改善 | PoC設計書の構成確定ステージ、決定規則の主観評価の特定、D-3 の扱いの用語整理 | **対応済** | 2026-08-20 | 2026-08-20 | [PoC設計書](../design/poc-design-topic-extraction.md) v1.0 → **v1.1** |
+| [ISSUE-004](ISSUE-004-collector-transport-error-retry/issue.md) | 不具合 | 収集スクリプトがトランスポート層のエラー（接続断）で停止する | **対応済** | 2026-08-20 | 2026-08-20 | なし（実験コードの修正） |
+| [ISSUE-005](ISSUE-005-timeseries-scope-and-committee-confound/issue.md) | 改善 | 年内の時系列推移が委員会の開催構成と交絡する。H-009 を動作確認へ限定 | **対応済** | 2026-08-20 | 2026-08-20 | [PoC設計書](../design/poc-design-topic-extraction.md) v1.1 → **v1.2** |
+| [ISSUE-006](ISSUE-006-empty-partition-schemaless-parquet/issue.md) | 不具合 | 0件の月がスキーマを持たない Parquet として書き出され、後続の読み込みが失敗する | **対応済** | 2026-08-20 | 2026-08-20 | なし（実験コードの修正） |
 
 状態: 調査中 / 対応中 / 対応済 / 保留 / 仕様として受容
 

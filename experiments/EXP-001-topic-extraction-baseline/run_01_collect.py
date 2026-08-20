@@ -6,7 +6,8 @@
 ただし以下は守る:
   - print() を使わず logging を使う
   - 出力先が .gitignore 対象であることをアサートする
-  - リトライしてよいのはエラー 19001（混雑）のみ
+  - APIエラーのリトライは 19001（混雑）のみ。19004〜19020 は即座に失敗させる
+  - トランスポート層の失敗（接続断）は19001と別系統でリトライする（ISSUE-004）
   - 逐次アクセスのみ。並列化しない
   - raw_json 列で API レスポンスを可逆に保持する（ADR-001 6.1節）
 
@@ -35,6 +36,12 @@ MAXIMUM_RECORDS = 100          # 仕様上の上限。1〜100（確認日 2026-0
 WAIT_SECONDS = 3.0             # リクエスト「前」に待つ
 TIMEOUT_SECONDS = 60.0
 RETRY_ATTEMPTS = 5             # 19001 のみ
+# ISSUE-004: トランスポート層の失敗（接続断）は19001と別系統でリトライする。
+# 切断の原因が未特定（keep-alive競合 / アクセス遮断 / 経路障害）のため、
+# 双方に耐えるよう待機を長めに取る。
+TRANSPORT_RETRY_ATTEMPTS = 5
+TRANSPORT_WAIT_MIN = 30.0
+TRANSPORT_WAIT_MAX = 600.0
 PROGRESS_EVERY = 20            # 何リクエストごとに進捗ログを出すか
 D1A_THRESHOLD_RECORDS = 10_000       # D-1a の判定時点
 D1A_PROJECTED_HOURS = 24.0           # D-1a の閾値
@@ -83,6 +90,19 @@ def month_ranges(start: date, end: date):
     return out
 
 
+@retry(
+    # ISSUE-004: 接続断は要求の内容に起因しないため19001と別系統で扱う。
+    # 待機を長めに取るのは、アクセス遮断であった場合に短間隔の再試行が
+    # 状況を悪化させるため。keep-alive競合であれば1回目で回復する。
+    retry=retry_if_exception_type(httpx.TransportError),
+    stop=stop_after_attempt(TRANSPORT_RETRY_ATTEMPTS),
+    wait=wait_exponential(multiplier=2, min=TRANSPORT_WAIT_MIN, max=TRANSPORT_WAIT_MAX),
+    reraise=True,
+    before_sleep=lambda st: log.warning(
+        "接続エラーのため待機して再試行する（%d回目 / %d）: %s",
+        st.attempt_number, TRANSPORT_RETRY_ATTEMPTS, st.outcome.exception(),
+    ),
+)
 @retry(
     retry=retry_if_exception_type(BusyError),
     stop=stop_after_attempt(RETRY_ATTEMPTS),
@@ -143,6 +163,7 @@ def collect_unit(client, unit_from: date, unit_until: date, man, counters):
             body = fetch(client, params)
         except BusyError as e:
             rec["errors"]["19001"] = rec["errors"].get("19001", 0) + 1
+            counters["errors"]["19001"] = counters["errors"].get("19001", 0) + 1
             rec["status"] = "失敗"
             save_manifest(man)
             raise RuntimeError(f"[{key}] 19001 のリトライが上限に達した: {e}") from e
@@ -151,6 +172,15 @@ def collect_unit(client, unit_from: date, unit_until: date, man, counters):
             rec["status"] = "失敗"
             save_manifest(man)
             raise
+        except httpx.TransportError as e:
+            # ISSUE-004: リトライ上限に達した接続エラー。無制限に再試行せず停止する
+            rec["errors"]["transport"] = rec["errors"].get("transport", 0) + 1
+            counters["errors"]["transport"] = counters["errors"].get("transport", 0) + 1
+            rec["status"] = "失敗"
+            save_manifest(man)
+            raise RuntimeError(
+                f"[{key}] 接続エラーのリトライが上限に達した（ISSUE-004）: {e}"
+            ) from e
 
         counters["requests"] += 1
 
@@ -204,9 +234,14 @@ def collect_unit(client, unit_from: date, unit_until: date, man, counters):
         )
 
     # --- Parquet へ保存（raw_json 列で可逆に保持する。ADR-001 6.1節） ---
-    part = RAW_DIR / f"year={unit_from.year}" / f"month={unit_from.month:02d}"
-    part.mkdir(parents=True, exist_ok=True)
-    pq.write_table(pa.Table.from_pylist(rows), part / "speech.parquet", compression="zstd")
+    # 0件の月はファイルを作らない。pa.Table.from_pylist([]) は 0行0列となり、
+    # 列構成が他の月と揃わずグロブ読み込みが壊れるため（ISSUE-006）。
+    if rows:
+        part = RAW_DIR / f"year={unit_from.year}" / f"month={unit_from.month:02d}"
+        part.mkdir(parents=True, exist_ok=True)
+        pq.write_table(pa.Table.from_pylist(rows), part / "speech.parquet", compression="zstd")
+    else:
+        log.info("[%s] 該当0件のためファイルを作成しない", key)
 
     counters["base_records"] += got
     counters["records"] = counters["base_records"]
